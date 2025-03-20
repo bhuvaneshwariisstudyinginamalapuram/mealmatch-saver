@@ -2,12 +2,11 @@
 import React, { useState } from 'react';
 import { DashboardLayout } from '@/layout/DashboardLayout';
 import { RoleDashboard } from '@/components/RoleDashboard';
-import { useLocation, Navigate } from 'react-router-dom';
+import { useLocation, Navigate, Link } from 'react-router-dom';
 import { UserProfileHeader } from '@/components/UserProfileHeader';
 import ThreeDAnimation from '@/components/ThreeDAnimation';
 import { Button } from '@/components/ui/button';
-import { BarChart3, ArrowRight } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { BarChart3, ArrowRight, User } from 'lucide-react';
 import { FadeIn, BlurIn } from '@/components/ui/animations';
 
 const Dashboard = () => {
@@ -73,6 +72,16 @@ const Dashboard = () => {
                     <Link to={userType === 'restaurant' ? '/dashboard/donations' : '/dashboard/restaurants'}>
                       {userType === 'restaurant' ? 'Manage Donations' : 'Find Restaurants'}
                       <ArrowRight size={16} />
+                    </Link>
+                  </Button>
+                  <Button 
+                    variant="secondary" 
+                    className="gap-2" 
+                    asChild
+                  >
+                    <Link to="/dashboard/profile">
+                      View Profile
+                      <User size={16} />
                     </Link>
                   </Button>
                 </div>

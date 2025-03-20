@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Bell, ChevronDown } from 'lucide-react';
+import { Bell, ChevronDown, User } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
@@ -62,6 +62,7 @@ export function UserProfileHeader({ userName, userRole, userImage }: UserProfile
           <DropdownMenuLabel>My Account</DropdownMenuLabel>
           <DropdownMenuSeparator />
           <DropdownMenuItem onClick={() => navigate('/dashboard/profile')}>
+            <User size={16} className="mr-2" />
             Profile
           </DropdownMenuItem>
           <DropdownMenuItem onClick={() => navigate('/dashboard/settings')}>

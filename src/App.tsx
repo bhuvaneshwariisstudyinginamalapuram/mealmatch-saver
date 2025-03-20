@@ -17,6 +17,7 @@ import CharityRestaurants from "./pages/Dashboard/CharityRestaurants";
 import SchedulePage from "./pages/Dashboard/SchedulePage";
 import AnalyticsPage from "./pages/Dashboard/AnalyticsPage";
 import SettingsPage from "./pages/Dashboard/SettingsPage";
+import ProfilePage from "./pages/Dashboard/ProfilePage";
 
 const queryClient = new QueryClient();
 
@@ -34,6 +35,7 @@ const App = () => (
           <Route path="/dashboard/schedule" element={<SchedulePage />} />
           <Route path="/dashboard/analytics" element={<AnalyticsPage />} />
           <Route path="/dashboard/settings" element={<SettingsPage />} />
+          <Route path="/dashboard/profile" element={<ProfilePage />} />
           <Route path="/how-it-works" element={<HowItWorks />} />
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
