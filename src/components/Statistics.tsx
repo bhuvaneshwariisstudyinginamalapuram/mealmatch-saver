@@ -1,6 +1,5 @@
 
 import React, { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
 import { Utensils, Users, ShoppingBag, Leaf } from 'lucide-react';
 
 // Mock data - in a real app, this would come from an API

@@ -132,12 +132,14 @@ export function FloatingElement({
       }}
     >
       {children}
-      <style jsx>{`
-        @keyframes float {
-          0%, 100% { transform: translateY(0); }
-          50% { transform: translateY(-${amplitude}px); }
-        }
-      `}</style>
+      <style dangerouslySetInnerHTML={{
+        __html: `
+          @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-${amplitude}px); }
+          }
+        `
+      }} />
     </div>
   );
 }
