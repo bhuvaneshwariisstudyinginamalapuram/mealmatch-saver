@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Bell, ChevronDown, User } from 'lucide-react';
+import { Bell, ChevronDown, User, LogOut } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
@@ -11,6 +11,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '@/components/AuthProvider';
 
 interface UserProfileHeaderProps {
   userName: string;
@@ -20,9 +21,10 @@ interface UserProfileHeaderProps {
 
 export function UserProfileHeader({ userName, userRole, userImage }: UserProfileHeaderProps) {
   const navigate = useNavigate();
+  const { signOut } = useAuth();
   
-  const handleLogout = () => {
-    // In a real app, this would handle actual logout logic
+  const handleLogout = async () => {
+    await signOut();
     navigate('/');
   };
   
@@ -70,6 +72,7 @@ export function UserProfileHeader({ userName, userRole, userImage }: UserProfile
           </DropdownMenuItem>
           <DropdownMenuSeparator />
           <DropdownMenuItem onClick={handleLogout} className="text-destructive focus:text-destructive">
+            <LogOut size={16} className="mr-2" />
             Logout
           </DropdownMenuItem>
         </DropdownMenuContent>

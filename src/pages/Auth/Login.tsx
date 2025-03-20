@@ -5,34 +5,62 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useToast } from '@/components/ui/use-toast';
 import { FadeIn } from '@/components/ui/animations';
-import { GripVertical, LogIn } from 'lucide-react';
+import { GripVertical, LogIn, AlertCircle } from 'lucide-react';
+import { supabase } from '@/integrations/supabase/client';
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState('');
   const navigate = useNavigate();
   const { toast } = useToast();
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
+    setError('');
     
-    // Simulate login process
-    setTimeout(() => {
-      setIsLoading(false);
-      
-      // For demo purposes, we'll just navigate to the dashboard
-      // In a real app, you would validate credentials against your backend
-      toast({
-        title: "Logged in successfully!",
-        description: "Welcome back to FoodWaste Fighter.",
+    try {
+      // Authenticate with Supabase Auth
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email,
+        password,
       });
       
-      // Determine dashboard based on role (this would come from your auth system)
-      // For demo, we'll just use a restaurant role
-      navigate('/dashboard?role=restaurant');
-    }, 1500);
+      if (error) {
+        throw error;
+      }
+      
+      if (data?.user) {
+        // Get user role to determine which dashboard to show
+        const { data: userData, error: userError } = await supabase
+          .from('users')
+          .select('user_role')
+          .eq('id', data.user.id)
+          .single();
+        
+        if (userError) throw userError;
+        
+        toast({
+          title: "Logged in successfully!",
+          description: "Welcome back to FoodWaste Fighter.",
+        });
+        
+        // Navigate to the appropriate dashboard based on user role
+        navigate(`/dashboard?role=${userData?.user_role || 'restaurant'}`);
+      }
+    } catch (error: any) {
+      console.error("Login error:", error);
+      setError(error.message || "Failed to sign in. Please check your credentials.");
+      toast({
+        title: "Login Failed",
+        description: error.message || "Failed to sign in. Please check your credentials.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -55,6 +83,13 @@ const Login = () => {
         
         <FadeIn delay={0.2}>
           <div className="bg-white rounded-xl shadow-xl p-8 mb-6">
+            {error && (
+              <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-md flex items-start">
+                <AlertCircle className="text-red-500 mr-2 mt-0.5 shrink-0" size={16} />
+                <p className="text-sm text-red-600">{error}</p>
+              </div>
+            )}
+            
             <form onSubmit={handleLogin} className="space-y-6">
               <div className="space-y-2">
                 <label htmlFor="email" className="block text-sm font-medium">
@@ -120,7 +155,17 @@ const Login = () => {
               </div>
               
               <div className="grid grid-cols-2 gap-4">
-                <Button variant="outline" className="w-full">
+                <Button 
+                  variant="outline" 
+                  className="w-full"
+                  onClick={() => {
+                    toast({
+                      title: "Not implemented yet",
+                      description: "Social login will be available in a future update.",
+                      variant: "default",
+                    });
+                  }}
+                >
                   <svg className="w-5 h-5 mr-2" viewBox="0 0 24 24">
                     <path
                       d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
@@ -141,7 +186,17 @@ const Login = () => {
                   </svg>
                   Google
                 </Button>
-                <Button variant="outline" className="w-full">
+                <Button 
+                  variant="outline" 
+                  className="w-full"
+                  onClick={() => {
+                    toast({
+                      title: "Not implemented yet",
+                      description: "Social login will be available in a future update.",
+                      variant: "default",
+                    });
+                  }}
+                >
                   <svg className="w-5 h-5 mr-2 text-[#1877F2]" fill="currentColor" viewBox="0 0 24 24">
                     <path d="M9.19795 21.5H13.198V13.4901H16.8021L17.198 9.50977H13.198V7.5C13.198 6.94772 13.6457 6.5 14.198 6.5H17.198V2.5H14.198C11.4365 2.5 9.19795 4.73858 9.19795 7.5V9.50977H7.19795L6.80206 13.4901H9.19795V21.5Z"></path>
                   </svg>

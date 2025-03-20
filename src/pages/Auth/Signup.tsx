@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { useNavigate, Link, useSearchParams } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
@@ -83,24 +82,38 @@ const Signup = () => {
     setIsLoading(true);
     
     try {
-      // Insert data into Supabase
-      const { error } = await supabase
-        .from('sign_in')
-        .insert([{
-          email: data.email,
-          password: data.password
-        }]);
-      
-      if (error) throw error;
-      
-      // Show success message
-      toast({
-        title: "Account created successfully!",
-        description: "Welcome to FoodWaste Fighter.",
+      // First, register the user with Supabase Auth
+      const { data: authData, error: authError } = await supabase.auth.signUp({
+        email: data.email,
+        password: data.password,
       });
       
-      // Navigate to the appropriate dashboard
-      navigate(`/dashboard?role=${role}`);
+      if (authError) throw authError;
+      
+      if (authData.user) {
+        // Then insert user data into our custom users table
+        const { error: userError } = await supabase
+          .from('users')
+          .insert([{
+            id: authData.user.id,
+            email: data.email,
+            password: data.password, // Note: In production, never store plain passwords
+            organization_name: data.organizationName,
+            contact_name: data.name,
+            user_role: role
+          }]);
+        
+        if (userError) throw userError;
+        
+        // Show success message
+        toast({
+          title: "Account created successfully!",
+          description: "Welcome to FoodWaste Fighter.",
+        });
+        
+        // Navigate to the appropriate dashboard
+        navigate(`/dashboard?role=${role}`);
+      }
     } catch (error: any) {
       console.error("Error creating account:", error);
       toast({
