@@ -3,16 +3,33 @@ import React from 'react';
 import { DashboardLayout } from '@/layout/DashboardLayout';
 import { useLocation } from 'react-router-dom';
 import { BlurIn, FadeIn } from '@/components/ui/animations';
-import { BarChart, LineChart, PieChart } from 'lucide-react';
+import { BarChart as BarChartIcon, LineChart as LineChartIcon, PieChart as PieChartIcon } from 'lucide-react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { BarChart as Chart, ResponsiveContainer, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Bar, Line, Pie, Cell, LineChart as LineChartComponent, PieChart as PieChartComponent } from 'recharts';
+import { 
+  BarChart, 
+  ResponsiveContainer, 
+  XAxis, 
+  YAxis, 
+  CartesianGrid, 
+  Tooltip, 
+  Legend, 
+  Bar, 
+  Line, 
+  Pie, 
+  Cell, 
+  LineChart, 
+  PieChart,
+  Area,
+  AreaChart
+} from 'recharts';
+import { ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart';
 
 const AnalyticsPage = () => {
   const location = useLocation();
   const params = new URLSearchParams(location.search);
   const userType = (params.get('role') as 'restaurant' | 'charity') || 'restaurant';
   
-  // Mock data for charts
+  // Enhanced mock data for charts
   const monthlyData = [
     { name: 'Jan', donations: 20, meals: 60, waste: 40 },
     { name: 'Feb', donations: 25, meals: 75, waste: 50 },
@@ -38,10 +55,20 @@ const AnalyticsPage = () => {
     { name: 'Carbon', savedCO2: 200, month: 'May' },
     { name: 'Carbon', savedCO2: 220, month: 'Jun' },
   ];
+
+  const weeklyTrendData = [
+    { name: 'Mon', value: 10 },
+    { name: 'Tue', value: 15 },
+    { name: 'Wed', value: 20 },
+    { name: 'Thu', value: 25 },
+    { name: 'Fri', value: 30 },
+    { name: 'Sat', value: 20 },
+    { name: 'Sun', value: 15 },
+  ];
   
   return (
     <DashboardLayout userType={userType}>
-      <div className="p-6 md:p-8">
+      <div className="p-6 md:p-8 bg-gradient-to-br from-background to-accent/20">
         <BlurIn>
           <h1 className="text-2xl md:text-3xl font-bold mb-2">
             Your Impact Dashboard
@@ -55,7 +82,7 @@ const AnalyticsPage = () => {
           <FadeIn delay={0.1}>
             <div className="glass-card p-6 text-center">
               <div className="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center text-fwf-blue-600 mx-auto mb-4">
-                <BarChart size={24} />
+                <BarChartIcon size={24} />
               </div>
               <div className="text-3xl md:text-4xl font-bold mb-2">{userType === 'restaurant' ? '125' : '320'}</div>
               <p className="text-foreground/70">{userType === 'restaurant' ? 'Total Donations' : 'Meals Received'}</p>
@@ -65,7 +92,7 @@ const AnalyticsPage = () => {
           <FadeIn delay={0.2}>
             <div className="glass-card p-6 text-center">
               <div className="w-12 h-12 rounded-full bg-green-100 flex items-center justify-center text-fwf-green-600 mx-auto mb-4">
-                <LineChart size={24} />
+                <LineChartIcon size={24} />
               </div>
               <div className="text-3xl md:text-4xl font-bold mb-2">250kg</div>
               <p className="text-foreground/70">Food Waste Prevented</p>
@@ -75,7 +102,7 @@ const AnalyticsPage = () => {
           <FadeIn delay={0.3}>
             <div className="glass-card p-6 text-center">
               <div className="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center text-fwf-blue-600 mx-auto mb-4">
-                <PieChart size={24} />
+                <PieChartIcon size={24} />
               </div>
               <div className="text-3xl md:text-4xl font-bold mb-2">500kg</div>
               <p className="text-foreground/70">CO₂ Emissions Saved</p>
@@ -90,21 +117,60 @@ const AnalyticsPage = () => {
                 <h2 className="text-xl font-semibold">Activity Overview</h2>
                 <TabsList>
                   <TabsTrigger value="monthly">Monthly</TabsTrigger>
+                  <TabsTrigger value="weekly">Weekly</TabsTrigger>
                   <TabsTrigger value="yearly">Yearly</TabsTrigger>
                 </TabsList>
               </div>
               
               <TabsContent value="monthly" className="pt-4">
                 <ResponsiveContainer width="100%" height={300}>
-                  <LineChartComponent data={monthlyData} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
-                    <CartesianGrid strokeDasharray="3 3" />
+                  <LineChart data={monthlyData} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
+                    <CartesianGrid strokeDasharray="3 3" strokeOpacity={0.5} />
+                    <XAxis dataKey="name" />
+                    <YAxis />
+                    <Tooltip content={<CustomTooltip />} />
+                    <Legend />
+                    <Line 
+                      type="monotone" 
+                      dataKey="donations" 
+                      stroke="#3498db" 
+                      strokeWidth={2}
+                      name={userType === 'restaurant' ? 'Donations' : 'Meals Received'} 
+                      activeDot={{ r: 8 }}
+                    />
+                    <Line 
+                      type="monotone" 
+                      dataKey="waste" 
+                      stroke="#2ecc71" 
+                      strokeWidth={2}
+                      name="Waste Prevented (kg)" 
+                    />
+                  </LineChart>
+                </ResponsiveContainer>
+              </TabsContent>
+
+              <TabsContent value="weekly" className="pt-4">
+                <ResponsiveContainer width="100%" height={300}>
+                  <AreaChart data={weeklyTrendData} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
+                    <defs>
+                      <linearGradient id="colorValue" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="5%" stopColor="#3498db" stopOpacity={0.8}/>
+                        <stop offset="95%" stopColor="#3498db" stopOpacity={0.1}/>
+                      </linearGradient>
+                    </defs>
+                    <CartesianGrid strokeDasharray="3 3" strokeOpacity={0.5} />
                     <XAxis dataKey="name" />
                     <YAxis />
                     <Tooltip />
-                    <Legend />
-                    <Line type="monotone" dataKey="donations" stroke="#3498db" name={userType === 'restaurant' ? 'Donations' : 'Meals Received'} />
-                    <Line type="monotone" dataKey="waste" stroke="#2ecc71" name="Waste Prevented (kg)" />
-                  </LineChartComponent>
+                    <Area 
+                      type="monotone" 
+                      dataKey="value" 
+                      stroke="#3498db" 
+                      fillOpacity={1} 
+                      fill="url(#colorValue)" 
+                      name={userType === 'restaurant' ? 'Daily Donations' : 'Daily Meals'} 
+                    />
+                  </AreaChart>
                 </ResponsiveContainer>
               </TabsContent>
               
@@ -122,7 +188,7 @@ const AnalyticsPage = () => {
             <div className="glass-card p-6">
               <h2 className="text-xl font-semibold mb-6">Donation Categories</h2>
               <ResponsiveContainer width="100%" height={300}>
-                <PieChartComponent>
+                <PieChart>
                   <Pie
                     data={categoryData}
                     cx="50%"
@@ -139,7 +205,7 @@ const AnalyticsPage = () => {
                   </Pie>
                   <Tooltip />
                   <Legend />
-                </PieChartComponent>
+                </PieChart>
               </ResponsiveContainer>
             </div>
           </FadeIn>
@@ -149,12 +215,17 @@ const AnalyticsPage = () => {
               <h2 className="text-xl font-semibold mb-6">Environmental Impact</h2>
               <ResponsiveContainer width="100%" height={300}>
                 <BarChart data={impactData}>
-                  <CartesianGrid strokeDasharray="3 3" />
+                  <CartesianGrid strokeDasharray="3 3" strokeOpacity={0.5} />
                   <XAxis dataKey="month" />
                   <YAxis />
                   <Tooltip />
                   <Legend />
-                  <Bar dataKey="savedCO2" name="CO₂ Saved (kg)" fill="#2ecc71" />
+                  <Bar 
+                    dataKey="savedCO2" 
+                    name="CO₂ Saved (kg)" 
+                    fill="#2ecc71"
+                    radius={[4, 4, 0, 0]}
+                  />
                 </BarChart>
               </ResponsiveContainer>
             </div>
@@ -163,6 +234,24 @@ const AnalyticsPage = () => {
       </div>
     </DashboardLayout>
   );
+};
+
+// Custom tooltip component for charts
+const CustomTooltip = ({ active, payload, label }: any) => {
+  if (active && payload && payload.length) {
+    return (
+      <div className="glass-card p-2 border border-border/50">
+        <p className="font-medium">{`${label}`}</p>
+        {payload.map((entry: any, index: number) => (
+          <p key={`item-${index}`} style={{ color: entry.color }}>
+            {`${entry.name}: ${entry.value}`}
+          </p>
+        ))}
+      </div>
+    );
+  }
+
+  return null;
 };
 
 export default AnalyticsPage;
