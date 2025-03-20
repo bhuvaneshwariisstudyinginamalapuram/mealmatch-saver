@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { DashboardLayout } from '@/layout/DashboardLayout';
 import { RoleDashboard } from '@/components/RoleDashboard';
-import { useLocation } from 'react-router-dom';
+import { useLocation, Navigate } from 'react-router-dom';
 import { UserProfileHeader } from '@/components/UserProfileHeader';
 
 const Dashboard = () => {
@@ -17,6 +17,15 @@ const Dashboard = () => {
     name: userType === 'restaurant' ? 'Fresh Eats Restaurant' : 'Hope Community Kitchen',
     role: userType,
   });
+
+  // Redirect to specific dashboards based on URL patterns
+  if (location.pathname === '/dashboard/donations') {
+    return <Navigate to="/dashboard/donations" />;
+  }
+  
+  if (location.pathname === '/dashboard/restaurants') {
+    return <Navigate to="/dashboard/restaurants" />;
+  }
 
   return (
     <DashboardLayout userType={userType}>
