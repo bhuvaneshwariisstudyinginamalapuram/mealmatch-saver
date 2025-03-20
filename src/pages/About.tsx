@@ -6,85 +6,85 @@ import { Heart, Leaf, Users, Globe, Award, ShieldCheck } from 'lucide-react';
 import { FadeIn, FloatingElement } from '@/components/ui/animations';
 
 const About = () => {
-  const teamMembers = [
-    {
-      name: "Sarah Johnson",
-      role: "Founder & CEO",
-      image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&auto=format&fit=crop&w=256&q=80",
-      bio: "Sarah founded FoodWaste Fighter after witnessing food waste firsthand while managing a restaurant chain."
-    },
-    {
-      name: "Michael Chen",
-      role: "CTO",
-      image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-1.2.1&auto=format&fit=crop&w=256&q=80",
-      bio: "Michael brings 15 years of tech experience to create our innovative platform."
-    },
-    {
-      name: "Aisha Patel",
-      role: "Community Director",
-      image: "https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-1.2.1&auto=format&fit=crop&w=256&q=80",
-      bio: "Aisha coordinates with charities and food banks to ensure seamless donation processes."
-    },
-    {
-      name: "David Rodriguez",
-      role: "Restaurant Relations",
-      image: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?ixlib=rb-1.2.1&auto=format&fit=crop&w=256&q=80",
-      bio: "David works with restaurants to optimize their donation processes and reduce waste."
-    }
-  ];
-
   const values = [
     {
       icon: <Heart className="text-white" size={24} />,
       title: "Compassion",
       description: "We believe in helping our communities through kindness and action.",
-      color: "bg-fwf-blue-500"
+      color: "bg-orange-500"
     },
     {
       icon: <Leaf className="text-white" size={24} />,
       title: "Sustainability",
       description: "We're committed to creating environmentally sustainable solutions.",
-      color: "bg-fwf-green-500"
+      color: "bg-green-500"
     },
     {
       icon: <Users className="text-white" size={24} />,
       title: "Community",
       description: "We build connections that strengthen neighborhoods and communities.",
-      color: "bg-fwf-blue-500"
+      color: "bg-orange-500"
     },
     {
       icon: <Globe className="text-white" size={24} />,
       title: "Global Impact",
       description: "While we act locally, our vision is to create global change.",
-      color: "bg-fwf-green-500"
+      color: "bg-green-500"
     },
     {
       icon: <Award className="text-white" size={24} />,
       title: "Excellence",
       description: "We strive for excellence in everything we do.",
-      color: "bg-fwf-blue-500"
+      color: "bg-orange-500"
     },
     {
       icon: <ShieldCheck className="text-white" size={24} />,
       title: "Integrity",
       description: "We operate with honesty, transparency, and accountability.",
-      color: "bg-fwf-green-500"
+      color: "bg-green-500"
+    }
+  ];
+
+  const photoGallery = [
+    {
+      url: "https://images.unsplash.com/photo-1576021182211-9ea8dced3690?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+      caption: "Local farmers providing fresh produce"
+    },
+    {
+      url: "https://images.unsplash.com/photo-1593113646773-028c64a8f1b8?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+      caption: "Volunteers preparing food packages"
+    },
+    {
+      url: "https://images.unsplash.com/photo-1626783416763-960911f49a88?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+      caption: "Community food distribution event"
+    },
+    {
+      url: "https://images.unsplash.com/photo-1606787366850-de6330128a02?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+      caption: "Food rescue mission in action"
+    },
+    {
+      url: "https://images.unsplash.com/photo-1518398046578-8cca57782e17?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+      caption: "Local restaurant joining our initiative"
+    },
+    {
+      url: "https://images.unsplash.com/photo-1536746953345-c896a2a39c84?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+      caption: "Community gathering for food awareness"
     }
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-fwf-blue-50 via-white to-fwf-green-50">
+    <div className="min-h-screen bg-gradient-to-b from-orange-50 via-white to-green-50">
       <Navigation />
       
       <div className="pt-32 pb-20">
         <div className="container-tight">
           <div className="text-center max-w-3xl mx-auto mb-16">
             <FadeIn delay={0.1}>
-              <h1 className="text-4xl md:text-5xl font-display font-bold mb-6 text-transparent bg-clip-text bg-gradient-to-r from-fwf-blue-600 to-fwf-green-600">
+              <h1 className="text-4xl md:text-5xl font-display font-bold mb-6 text-transparent bg-clip-text bg-gradient-to-r from-orange-600 to-green-600">
                 About FoodWaste Fighter
               </h1>
               <p className="text-xl text-foreground/80">
-                We're on a mission to reduce food waste and fight hunger through technology and community collaboration.
+                We're on a mission to reduce food waste and fight hunger through technology and community collaboration in India and beyond.
               </p>
             </FadeIn>
           </div>
@@ -108,12 +108,12 @@ const About = () => {
                   </div>
                   <div className="relative">
                     <img 
-                      src="https://images.unsplash.com/photo-1542838132-92c53300491e?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" 
-                      alt="Food donation" 
+                      src="https://images.unsplash.com/photo-1578898887932-dce23a595ad4?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" 
+                      alt="Food donation in India" 
                       className="rounded-xl shadow-lg w-full h-full object-cover"
                     />
                     <div className="absolute -bottom-4 -right-4 bg-white p-4 rounded-xl shadow-lg">
-                      <p className="text-fwf-blue-600 font-semibold">Since 2020</p>
+                      <p className="text-orange-600 font-semibold">Since 2020</p>
                       <p className="text-3xl font-bold">10,000+</p>
                       <p className="text-sm text-foreground/70">Meals saved from waste</p>
                     </div>
@@ -122,10 +122,10 @@ const About = () => {
               </FadeIn>
               
               {/* Background Elements */}
-              <div className="absolute -top-5 -left-5 text-fwf-blue-100 opacity-50 -z-10">
+              <div className="absolute -top-5 -left-5 text-orange-100 opacity-50 -z-10">
                 <Leaf size={100} />
               </div>
-              <div className="absolute -bottom-5 -right-5 text-fwf-green-100 opacity-50 -z-10">
+              <div className="absolute -bottom-5 -right-5 text-green-100 opacity-50 -z-10">
                 <Heart size={100} />
               </div>
             </div>
@@ -149,37 +149,64 @@ const About = () => {
             </FadeIn>
           </div>
           
-          {/* Our Team Section */}
+          {/* Photo Gallery */}
           <div className="mb-20">
             <FadeIn delay={0.4}>
-              <h2 className="text-3xl font-display font-bold mb-10 text-center">Meet Our Team</h2>
-              <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-                {teamMembers.map((member, index) => (
-                  <div key={index} className="glass-card p-6 text-center hover:shadow-lg transition-all">
-                    <div className="w-24 h-24 rounded-full overflow-hidden mx-auto mb-4 border-4 border-white shadow-md">
-                      <img 
-                        src={member.image} 
-                        alt={member.name} 
-                        className="w-full h-full object-cover"
-                      />
+              <h2 className="text-3xl font-display font-bold mb-10 text-center">Our Impact in Pictures</h2>
+              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {photoGallery.map((photo, index) => (
+                  <div key={index} className="group relative overflow-hidden rounded-lg shadow-md hover:shadow-xl transition-all duration-300">
+                    <img 
+                      src={photo.url} 
+                      alt={photo.caption} 
+                      className="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-110"
+                    />
+                    <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/80 to-transparent text-white">
+                      <p className="font-medium">{photo.caption}</p>
                     </div>
-                    <h3 className="text-xl font-semibold mb-1">{member.name}</h3>
-                    <p className="text-fwf-blue-600 font-medium mb-3">{member.role}</p>
-                    <p className="text-foreground/70 text-sm">{member.bio}</p>
                   </div>
                 ))}
               </div>
             </FadeIn>
           </div>
           
+          {/* Indian Culture Section */}
+          <div className="mb-20">
+            <FadeIn delay={0.5}>
+              <div className="glass-card p-8 md:p-12 rounded-3xl bg-gradient-to-r from-orange-50 to-green-50">
+                <h2 className="text-3xl font-display font-bold mb-6 text-center">Indian Heritage of Giving</h2>
+                <div className="grid md:grid-cols-2 gap-10 items-center">
+                  <div>
+                    <img 
+                      src="https://images.unsplash.com/photo-1592628654757-99c7af44fadf?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" 
+                      alt="Indian community meal" 
+                      className="rounded-xl shadow-lg"
+                    />
+                  </div>
+                  <div>
+                    <p className="text-lg mb-4">
+                      Our mission is deeply inspired by the Indian tradition of "Anna Daan" (donation of food), which is considered one of the noblest forms of charity in Indian culture.
+                    </p>
+                    <p className="text-lg mb-4">
+                      For centuries, temples, gurudwaras, and community kitchens across India have provided meals to millions regardless of caste, creed, or religion - exemplifying the spirit of service and compassion.
+                    </p>
+                    <p className="text-lg">
+                      We've built our platform to honor this tradition while adding modern technology to make food donation more efficient, trackable, and widespread than ever before.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </FadeIn>
+          </div>
+          
           {/* Join Us CTA */}
-          <div className="bg-gradient-to-r from-fwf-blue-600 to-fwf-green-600 rounded-3xl p-10 text-white text-center">
+          <div className="bg-gradient-to-r from-orange-600 to-green-600 rounded-3xl p-10 text-white text-center">
             <h2 className="text-3xl font-display font-bold mb-4">Join Our Mission</h2>
             <p className="text-white/80 text-lg mb-8 max-w-2xl mx-auto">
               Whether you're a restaurant looking to reduce waste or a charity seeking to feed more people, we invite you to become part of our growing community.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <a href="/signup" className="px-8 py-3 bg-white text-fwf-blue-600 font-semibold rounded-full hover:shadow-lg transition-all">
+              <a href="/signup" className="px-8 py-3 bg-white text-orange-600 font-semibold rounded-full hover:shadow-lg transition-all">
                 Join FoodWaste Fighter
               </a>
               <a href="/contact" className="px-8 py-3 bg-white/20 text-white font-semibold rounded-full hover:bg-white/30 hover:shadow-lg transition-all">
@@ -190,12 +217,12 @@ const About = () => {
           
           {/* Floating Background Elements */}
           <FloatingElement className="absolute left-1/4 top-1/3 -z-10" amplitude={15} duration={6}>
-            <div className="text-fwf-green-200 opacity-30">
+            <div className="text-green-200 opacity-30">
               <Leaf size={120} />
             </div>
           </FloatingElement>
           <FloatingElement className="absolute right-1/4 bottom-1/4 -z-10" amplitude={20} duration={7} delay={1}>
-            <div className="text-fwf-blue-200 opacity-30">
+            <div className="text-orange-200 opacity-30">
               <Heart size={100} />
             </div>
           </FloatingElement>

@@ -4,6 +4,7 @@ import { DashboardLayout } from '@/layout/DashboardLayout';
 import { RoleDashboard } from '@/components/RoleDashboard';
 import { useLocation, Navigate } from 'react-router-dom';
 import { UserProfileHeader } from '@/components/UserProfileHeader';
+import ThreeDAnimation from '@/components/ThreeDAnimation';
 
 const Dashboard = () => {
   // In a real app, this would come from an authentication context
@@ -33,6 +34,13 @@ const Dashboard = () => {
         <UserProfileHeader 
           userName={userData.name} 
           userRole={userData.role}
+        />
+      </div>
+      <div className="mb-8">
+        <ThreeDAnimation 
+          animationType={userType === 'restaurant' ? 'fruits' : 'foodPackages'} 
+          height={300}
+          className="w-full rounded-lg shadow-inner my-6"
         />
       </div>
       <RoleDashboard userType={userType} />
