@@ -45,7 +45,18 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         setUser(session?.user ?? null);
         
         if (session?.user) {
-          await fetchUserData(session.user.id);
+          // Extract user data from user metadata instead of fetching from database
+          const metadata = session.user.user_metadata;
+          
+          if (metadata) {
+            setUserData({
+              id: session.user.id,
+              email: session.user.email || '',
+              organization_name: metadata.organization_name || '',
+              contact_name: metadata.contact_name || '',
+              user_role: metadata.user_role || null
+            });
+          }
         } else {
           setUserData(null);
         }
@@ -61,7 +72,18 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         setUser(session?.user ?? null);
         
         if (session?.user) {
-          await fetchUserData(session.user.id);
+          // Extract user data from user metadata
+          const metadata = session.user.user_metadata;
+          
+          if (metadata) {
+            setUserData({
+              id: session.user.id,
+              email: session.user.email || '',
+              organization_name: metadata.organization_name || '',
+              contact_name: metadata.contact_name || '',
+              user_role: metadata.user_role || null
+            });
+          }
         }
       } catch (error) {
         console.error('Error initializing auth:', error);
@@ -76,27 +98,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       subscription.unsubscribe();
     };
   }, []);
-
-  const fetchUserData = async (userId: string) => {
-    try {
-      const { data, error } = await supabase
-        .from('users')
-        .select('*')
-        .eq('id', userId)
-        .single();
-      
-      if (error) {
-        throw error;
-      }
-      
-      if (data) {
-        setUserData(data as UserData);
-      }
-    } catch (error) {
-      console.error('Error fetching user data:', error);
-      setUserData(null);
-    }
-  };
 
   const signOut = async () => {
     try {

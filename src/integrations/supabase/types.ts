@@ -39,45 +39,6 @@ export type Database = {
         }
         Relationships: []
       }
-      "sign in": {
-        Row: {}
-        Insert: {}
-        Update: {}
-        Relationships: []
-      }
-      users: {
-        Row: {
-          contact_name: string
-          created_at: string
-          email: string
-          id: string
-          organization_name: string
-          password: string
-          updated_at: string
-          user_role: string
-        }
-        Insert: {
-          contact_name: string
-          created_at?: string
-          email: string
-          id?: string
-          organization_name: string
-          password: string
-          updated_at?: string
-          user_role: string
-        }
-        Update: {
-          contact_name?: string
-          created_at?: string
-          email?: string
-          id?: string
-          organization_name?: string
-          password?: string
-          updated_at?: string
-          user_role?: string
-        }
-        Relationships: []
-      }
     }
     Views: {
       [_ in never]: never
